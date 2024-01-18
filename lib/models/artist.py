@@ -11,6 +11,9 @@ class Artist:
         self.nationality = nationality
         self.movement = movement
 
+    def __str__(self):
+        return f"Artist: {self.name} | {self.nationality} | {self.movement}"
+    
     #Setting up name, nationality, and movement as attributes
     @property
     def name(self):
