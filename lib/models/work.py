@@ -136,3 +136,35 @@ class Work:
             cls.all[work.id] = work
         
         return work
+
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT * FROM works
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+        return [ cls.instance_from_db(row) for row in rows ]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT * 
+            FROM works
+            WHERE id = ? 
+        """
+
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row)
+    
+    @classmethod
+    def find_by_title(cls, title):
+        sql = """
+            SELECT * 
+            FROM works
+            WHERE title = ? 
+        """
+
+        row = CURSOR.execute(sql, (title,)).fetchone()
+        return cls.instance_from_db(row)
+    
