@@ -2,6 +2,7 @@ from models.__init__ import CURSOR, CONN
 from models.artist import Artist
 
 class Work:
+    all = {}
     def __init__(self, title, year, medium, artist_id, id=None):
         self.id = id
         self.title = title
@@ -27,7 +28,7 @@ class Work:
         return self._year
 
     @year.setter
-    def name(self, year):
+    def year(self, year):
         if isinstance(year, int):
             self._year= year
         else:
@@ -69,6 +70,7 @@ class Work:
             title TEXT,
             year INTEGER,
             medium TEXT,
+            artist_id INTEGER,
             FOREIGN KEY (artist_id) REFERENCES artists(id))
         """
         CURSOR.execute(sql)
@@ -81,4 +83,22 @@ class Work:
         """
         CURSOR.execute(sql)
         CONN.commit()
+    
+    def save(self):
+        sql = """
+            INSERT INTO works (title, year, medium, artist_id)
+            VALUES (?, ?, ?, ?)
+        """
+        CURSOR.execute(sql, (self.title, self.year, self.medium, self.artist_id))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+
+    @classmethod
+    def create(cls, title, year, medium, artist_id):
+        work = cls(title, year, medium, artist_id)
+        work.save()
+
+        return work
     

@@ -15,7 +15,10 @@ def reset_database():
     Artist.create("Van Gogh", "Dutch", "Post-Impressionism")
     Artist.create("Claude Monet", "French", "Impressionism")
     Artist.create("Katsushika Hokusai", "Japanese", "Ukiyo-e")
-    # Work.create("Starry Night", 1889, "Oil on canvas", 1)
+
+    Work.create("Starry Night", 1889, "Oil on canvas", 1)
+    Work.create("Skull of a Skeleton with Burning Cigarette", 1885, "Oil on canvas", 1)
+    Work.create("The Great Wave off Kanagawa", 1831, "Woodblock print", 3)
 
 
 reset_database()
