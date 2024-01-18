@@ -61,4 +61,24 @@ class Work:
                 "Artist ID must correspond with an artist in the database"
             )
     
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABLE IF NOT EXISTS works(
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            year INTEGER,
+            medium TEXT,
+            FOREIGN KEY (artist_id) REFERENCES artists(id))
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+    
+    @classmethod
+    def drop_table(cls):
+        sql = """
+            DROP TABLE IF EXISTS works
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
     
