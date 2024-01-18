@@ -9,4 +9,9 @@ def reset_database():
     Artist.drop_table()
     Artist.create_table()
 
+    Artist.create("Van Gogh", "Dutch", "Post-Impressionism")
+    Artist.create("Claude Monet", "French", "Impressionism")
+    Artist.create("Katsushika Hokusai", "Japanese", "Ukiyo-e")\
+
+reset_database()
 ipdb.set_trace()
