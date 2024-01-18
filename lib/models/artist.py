@@ -45,3 +45,23 @@ class Artist:
             raise ValueError(
                 "Movement must be a non-empty string"
             )
+    
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABLE IF NOT EXISTS artists(
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            nationality TEXT,
+            movement TEXT)
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    @classmethod
+    def drop_table(cls):
+        sql = """
+            DROP TABLE IF EXISTS artists
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
