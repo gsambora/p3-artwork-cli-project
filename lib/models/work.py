@@ -121,3 +121,18 @@ class Work:
 
         del type(self).all[self.id]
         self.id = None
+
+    @classmethod
+    def instance_from_db(cls, row):
+        work = cls.all.get(row[0])
+        if work:
+            work.title = row[1]
+            work.year = row[2]
+            work.medium = row[3]
+            work.artist_id = row[4]
+        else:
+            work = cls(row[1], row[2], row[3], row[4])
+            work.id = row[0]
+            cls.all[work.id] = work
+        
+        return work

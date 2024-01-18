@@ -145,3 +145,34 @@ class Artist:
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_name(cls, name):
+        sql = """
+            SELECT *
+            FROM artists
+            WHERE name is ?
+        """
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT *
+            FROM artists
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+    
+    def works(self):
+        from models.work import Work
+        sql = """
+            SELECT * FROM works
+            WHERE artist_id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+
+        rows = CURSOR.fetchall()
+        return [ Work.instance_from_db(row) for row in rows ]    
