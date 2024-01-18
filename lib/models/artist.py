@@ -1,6 +1,8 @@
 from models.__init__ import CURSOR, CONN
 
 class Artist:
+    all = {}
+    
     def __init__(self, name, nationality, movement, id = None):
         self.id = id
         self.name = name
@@ -57,6 +59,7 @@ class Artist:
         """
         CURSOR.execute(sql)
         CONN.commit()
+        print("table created!")
 
     @classmethod
     def drop_table(cls):
@@ -65,3 +68,14 @@ class Artist:
         """
         CURSOR.execute(sql)
         CONN.commit()
+    
+    def save(self):
+        sql = """
+            INSERT INTO departments (name, nationality, movement)
+            VALUES (?, ?, ?)
+        """
+        CURSOR.execute(sql, (self.name, self.nationality, self.movement))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
