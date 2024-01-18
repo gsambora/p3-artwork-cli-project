@@ -117,3 +117,31 @@ class Artist:
 
         #Set the id to none
         self.id = None
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        #Return an artist object with the data in the given table row
+        artist = cls.all.get(row[0])
+        if artist:
+            #If the row given is in the class dictionary, check that attr match
+            artist.name = row[1]
+            artist.nationality = row[2]
+            artist.movement = row[3]
+        else:
+            #If the table row is not in the class dictionary, make a new instance and add to dict
+            artist = cls(row[1], row[2], row[3])
+            artist.id = row[0]
+            cls.all[artist.id] = artist
+        
+        return artist
+
+    @classmethod
+    def find_by_id(cls, id):
+        #Return the artist object that has the given table id number
+        sql = """
+            SELECT *
+            FROM artists
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
