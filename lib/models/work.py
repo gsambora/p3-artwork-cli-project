@@ -108,7 +108,7 @@ class Work:
     def update(self):
         sql = """
             UPDATE works
-            SET title = ?, year = ?, medium = ? artist_id = ?
+            SET title = ?, year = ?, medium = ?, artist_id = ?
             WHERE id = ?
         """
         CURSOR.execute(sql, (self.title, self.year, self.medium, self.artist_id, self.id))

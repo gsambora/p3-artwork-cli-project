@@ -13,7 +13,9 @@ from helpers import (
     works_by_medium,
     add_artist,
     update_artist,
-    delete_artist
+    delete_artist,
+    add_work,
+    update_work
 )
 
 
@@ -39,6 +41,8 @@ def main():
             works_by_artist()
         elif choice == "8":
             works_by_medium()
+        elif choice == "9":
+            database_loop()
         else:
             print("Invalid choice")
 
@@ -69,9 +73,9 @@ def database_loop():
     elif choice == "3":
         delete_artist()
     elif choice == "4":
-        list_nationality()
+        add_work()
     elif choice == "5":
-        list_all_works()
+        update_work()
     elif choice == "6":
         find_work()
 

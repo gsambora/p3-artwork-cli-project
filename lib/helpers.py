@@ -33,7 +33,7 @@ def artist_by_work():
     try:
         work = Work.find_by_title(title)
         artist = Artist.find_by_id(work.artist_id)
-        print(f"The work {title} was created by: {artist.name} | {artist.nationality} | {artist.movement}")
+        print(f'The work "{title}" was created by: {artist.name} | {artist.nationality} | {artist.movement}')
         Artist.current = artist
         artist_options()
     except Exception:
@@ -123,7 +123,8 @@ def artist_options():
 def list_all_works():
     works = Work.get_all()
     for work in works:
-        print(work)
+        artist = Artist.find_by_id(work.artist_id)
+        print(f'"{work.title}" | {work.year} | {work.medium} | {artist.name}')
 
 def work_not_found(title=None):
     print(f"Work {title} not in database. Would you like to add it? ")
@@ -141,7 +142,7 @@ def find_work():
     try:
         work = Work.find_by_title(title)
         artist = Artist.find_by_id(work.artist_id)
-        print(f"{title} is a/an {work.medium} piece and was created in {work.year} by {artist.name}.")
+        print(f'"{title}" is a/an {work.medium} piece and was created in {work.year} by {artist.name}.')
     except Exception:
         work_not_found(title)
 
@@ -150,7 +151,7 @@ def works_by_artist():
     try: 
         artist = Artist.find_by_name(name)
         works = artist.works()
-        [print(f"The work {work.title} was created by: {artist.name} | {artist.nationality} | {artist.movement}") for work in works]
+        [print(f'The work "{work.title}" was created by: {artist.name} | {artist.nationality} | {artist.movement}') for work in works]
         print(f"Would you like to add a new work by {name}?")
         print("1. Yes")
         print("2. No")
@@ -167,7 +168,7 @@ def works_by_artist():
 def works_by_medium():
     medium = input("Enter an artistic medium: ")
     works = Work.get_all()
-    [print(f"{work.title} is a/an {work.medium} piece and was created in {work.year} by {Artist.find_by_id(work.artist_id).name}.") for work in works if work.medium == medium]
+    [print(f'"{work.title}" is a/an {work.medium} piece and was created in {work.year} by {Artist.find_by_id(work.artist_id).name}.') for work in works if work.medium == medium]
 
 def add_work(title=None, artist_input=None):
     if not title:
@@ -184,6 +185,25 @@ def add_work(title=None, artist_input=None):
         #print("Error: ", exc)
         print("The artist must already be in the database before entering the work.")
         artist_not_found(artist_input)
+
+def update_work(work=None):
+    if not work:
+        title = input("Enter the title of the work you want to update: ")
+        work = Work.find_by_title(title)
+    
+    try:
+        work.title = input("Enter the updated title of the work: ")
+        work.year = int( input("Enter the updated year the work was created: ") )
+        work.medium = input("Enter the updated art medium of the work: ")
+        artist = input("Enter the updated name of the work's artist: ")
+        print(Artist.find_by_name(artist).id)
+        work.artist_id = int( Artist.find_by_name(artist).id )
+
+        work.update()
+        print(f"Success! Updated work information: {work.title} | {work.year} | {work.medium}")
+    
+    except Exception as exc:
+        print("Error updating work: ", exc)
 
 def exit_program():
     print("Goodbye!")
