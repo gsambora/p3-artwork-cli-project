@@ -3,6 +3,8 @@ from models.artist import Artist
 
 class Work:
     all = {}
+    current = None
+    
     def __init__(self, title, year, medium, artist_id, id=None):
         self.id = id
         self.title = title

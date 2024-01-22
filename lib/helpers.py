@@ -143,6 +143,8 @@ def find_work():
         work = Work.find_by_title(title)
         artist = Artist.find_by_id(work.artist_id)
         print(f'"{title}" is a/an {work.medium} piece and was created in {work.year} by {artist.name}.')
+        Work.current = work
+        work_options()
     except Exception:
         work_not_found(title)
 
@@ -216,7 +218,23 @@ def delete_work(work=None):
         print(f"Success! Removed {title} from database")
     except Exception as exc:
         print("Error deleting work: ", exc)
-    
+
+def work_options():
+    print("0. Exit program")
+    print("1. Update work information")
+    print("2. Remove work from database")
+    print("3. Return to main menu")
+
+    choice = input("> ")
+    if choice == "0":
+        exit_program()
+    elif choice == "1":
+        update_work(Work.current)
+    elif choice == "2":
+        delete_work(Work.current)
+    elif choice == "3":
+        pass
+
 def exit_program():
     print("Goodbye!")
     exit()
