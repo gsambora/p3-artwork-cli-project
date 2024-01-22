@@ -34,7 +34,8 @@ def artist_by_work():
         Artist.current = artist
         artist_options()
     except Exception:
-        print(f"Work {title} not in database.")
+        work_not_found(title)
+        #print(f"Work {title} not in database.")
 
 def list_movement():
     movement = input("Enter an artistic movement: ")
@@ -114,6 +115,17 @@ def list_all_works():
     for work in works:
         print(work)
 
+def work_not_found(title=None):
+    print(f"Work {title} not in database. Would you like to add it? ")
+    print("1. Yes")
+    print("2. No")
+
+    choice = input("> ")
+    if choice == "1":
+        add_work(title)
+    else:
+        pass
+
 def find_work():
     title = input("Enter the title of a work of art: ")
     try:
@@ -121,15 +133,16 @@ def find_work():
         artist = Artist.find_by_id(work.artist_id)
         print(f"{title} is a/an {work.medium} piece and was created in {work.year} by {artist.name}.")
     except Exception:
-        print(f"Work {title} not in database. Would you like to add it? ")
-        print("1. Yes")
-        print("2. No")
+        work_not_found(title)
+        # print(f"Work {title} not in database. Would you like to add it? ")
+        # print("1. Yes")
+        # print("2. No")
 
-        choice = input("> ")
-        if choice == "1":
-            add_work(title)
-        else:
-            pass
+        # choice = input("> ")
+        # if choice == "1":
+        #     add_work(title)
+        # else:
+        #     pass
 
 def add_work(title=None):
     if not title:
