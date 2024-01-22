@@ -6,6 +6,15 @@ def list_artists():
     artists = Artist.get_all()
     for artist in artists:
         print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
+    print("Would you like to add a new work of art?")
+    print("1. Yes")
+    print("2. No")
+
+    choice = input("> ")
+    if choice == "1":
+        add_artist()
+    else:
+        pass
 
 def artist_by_name():
     name = input("Enter an artist's name: ")
@@ -125,6 +134,16 @@ def list_all_works():
     for work in works:
         artist = Artist.find_by_id(work.artist_id)
         print(f'"{work.title}" | {work.year} | {work.medium} | {artist.name}')
+    
+    print("Would you like to add a new work of art?")
+    print("1. Yes")
+    print("2. No")
+
+    choice = input("> ")
+    if choice == "1":
+        add_work()
+    else:
+        pass
 
 def work_not_found(title=None):
     print(f"Work {title} not in database. Would you like to add it? ")
