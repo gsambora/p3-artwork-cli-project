@@ -15,16 +15,19 @@ def artist_by_name():
         Artist.current = artist
         artist_options()
     except Exception:
-        print(f"Artist {name} not in database. Would you like to add them?")
-        print("1. Yes")
-        print("2. No")
+        artist_not_found(name)
 
-        choice = input("> ")
-        if choice == "1":
-            add_artist(name)
-        else:
-            pass
-    
+def artist_not_found(name=None):
+    print(f"Artist {name} not in database. Would you like to add them?")
+    print("1. Yes")
+    print("2. No")
+
+    choice = input("> ")
+    if choice == "1":
+        add_artist(name)
+    else:
+        pass
+
 def artist_by_work():
     title = input("Enter the title of a work of art: ")
     try:
@@ -35,7 +38,6 @@ def artist_by_work():
         artist_options()
     except Exception:
         work_not_found(title)
-        #print(f"Work {title} not in database.")
 
 def list_movement():
     movement = input("Enter an artistic movement: ")
@@ -69,10 +71,12 @@ def delete_artist(artist):
     except Exception as exc:
         print("Error deleting artist: ", exc)
 
-def add_artist(name):
+def add_artist(name=None):
+    if not name:
+        name = input("Enter the artist's name: ")
     try:
-        nationality = input("Enter the artist's updated nationality: ")
-        movement = input("Enter the artist's updated artistic movement: ")
+        nationality = input("Enter the artist's nationality: ")
+        movement = input("Enter the artist's primary artistic movement: ")
 
         Artist.create(name, nationality, movement)
         print(f"Success! The artist {name} has been added to the database.")
@@ -82,7 +86,7 @@ def add_artist(name):
 
         choice = input("> ")
         if choice == "1":
-            add_work()
+            add_work(name)
         else:
             pass
     except Exception as exc:
@@ -134,22 +138,14 @@ def find_work():
         print(f"{title} is a/an {work.medium} piece and was created in {work.year} by {artist.name}.")
     except Exception:
         work_not_found(title)
-        # print(f"Work {title} not in database. Would you like to add it? ")
-        # print("1. Yes")
-        # print("2. No")
 
-        # choice = input("> ")
-        # if choice == "1":
-        #     add_work(title)
-        # else:
-        #     pass
-
-def add_work(title=None):
+def add_work(title=None, artist_input=None):
     if not title:
         title = input("Enter the title of the work: ")
     year = int( input("Enter the year the work was created: ") )
     medium = input("Enter the art medium of the work: ")
-    artist_input = input("Enter the name of the artist of the work: ")
+    if not artist_input:
+        artist_input = input("Enter the name of the artist of the work: ")
     try:
         artist = Artist.find_by_name(artist_input)
         Work.create(title, year, medium, artist.id)
@@ -157,16 +153,7 @@ def add_work(title=None):
     except Exception as exc:
         #print("Error: ", exc)
         print("The artist must already be in the database before entering the work.")
-        print(f"Would you like to add the artist {artist_input}?")
-
-        print("1. Yes")
-        print("2. No")
-
-        choice = input("> ")
-        if choice == "1":
-            add_artist(artist_input)
-        else:
-            pass
+        artist_not_found(artist_input)
 
 def exit_program():
     print("Goodbye!")
