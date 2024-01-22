@@ -9,37 +9,24 @@ def list_artists():
 
 def artist_by_name():
     name = input("Enter an artist's name: ")
-    artist = Artist.find_by_name(name)
-
-    if artist:
+    try:
+        artist = Artist.find_by_name(name)
         print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
         Artist.current = artist
         artist_options()
-    else:
+    except Exception:
         print(f"Artist {name} not in database.")
-
-def artist_by_id():
-    id = input("Enter an artist's ID: ")
-    artist = Artist.find_by_id(id)
-
-    if artist:
-        print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
-        Artist.current = artist
-        artist_options()
-    else:
-        print(f"Artist {id} not in database.")
     
 def artist_by_work():
     title = input("Enter the title of a work of art: ")
-    work = Work.find_by_title(title)
-
-    if work:
+    try:
+        work = Work.find_by_title(title)
         artist = Artist.find_by_id(work.artist_id)
         print(f"The work {title} was created by: {artist.name} | {artist.nationality} | {artist.movement}")
         Artist.current = artist
         artist_options()
-    else:
-        print(f"The work {title} is not in database.")
+    except Exception as exc:
+        print(f"Work {title} not in database.")
     
 def list_all_works():
     works = Work.get_all()
@@ -65,9 +52,13 @@ def update_artist(artist):
         print("Error updating artist: ", exc)
 
 def delete_artist(artist):
-    name = artist.name
-    artist.delete()
-    print(f"Success! Deleted {name} and their works of art from database")
+    try:
+        name = artist.name
+        artist.delete()
+        print(f"Success! Removed {name} and their works of art from database")
+    except Exception as exc:
+        print("Error deleting artist: ", exc)
+
 
 def artist_options():
     #print("The current artist is: ", Artist.current.name)

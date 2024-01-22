@@ -5,7 +5,6 @@ from helpers import (
     list_artists,
     list_all_works,
     artist_by_work,
-    artist_by_id,
     artist_by_name
 )
 
@@ -35,10 +34,8 @@ def artist_loop():
     elif choice == "1":
         artist_by_name()
     elif choice == "2":
-        artist_by_id()
-    elif choice == "3":
         artist_by_work()
-    elif choice == "4":
+    elif choice == "3":
         # go back to previous menu
         main()
     else:
@@ -63,9 +60,8 @@ def menu():
 def find_artist_menu():
     print("0. Exit the program")
     print("1. Find artist by name")
-    print("2. Find artist by ID")
-    print("3. Find artist by work")
-    print("4. Return to main menu")
+    print("2. Find artist by work")
+    print("3. Return to main menu")
 
 def find_work_menu():
     print("1. Find work by title")
