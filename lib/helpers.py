@@ -15,7 +15,15 @@ def artist_by_name():
         Artist.current = artist
         artist_options()
     except Exception:
-        print(f"Artist {name} not in database.")
+        print(f"Artist {name} not in database. Would you like to add them?")
+        print("1. Yes")
+        print("2. No")
+
+        choice = input("> ")
+        if choice == "1":
+            add_artist(name)
+        else:
+            pass
     
 def artist_by_work():
     title = input("Enter the title of a work of art: ")
@@ -25,7 +33,7 @@ def artist_by_work():
         print(f"The work {title} was created by: {artist.name} | {artist.nationality} | {artist.movement}")
         Artist.current = artist
         artist_options()
-    except Exception as exc:
+    except Exception:
         print(f"Work {title} not in database.")
 
 def list_movement():
@@ -60,6 +68,15 @@ def delete_artist(artist):
     except Exception as exc:
         print("Error deleting artist: ", exc)
 
+def add_artist(name):
+    try:
+        nationality = input("Enter the artist's updated nationality: ")
+        movement = input("Enter the artist's updated artistic movement: ")
+
+        Artist.create(name, nationality, movement)
+    except Exception as exc:
+        print("Error adding new artist: ", exc)
+
 
 def artist_options():
     #print("The current artist is: ", Artist.current.name)
@@ -93,7 +110,7 @@ def find_work():
         work = Work.find_by_title(title)
         artist = Artist.find_by_id(work.artist_id)
         print(f"{title} is a/an {work.medium} piece and was created in {work.year} by {artist.name}.")
-    except Exception as exc:
+    except Exception:
         print(f"Work {title} not in database.")
 
 def exit_program():
