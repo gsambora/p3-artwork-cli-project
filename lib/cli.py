@@ -3,7 +3,8 @@
 from helpers import (
     exit_program,
     list_artists,
-    list_all_works
+    list_all_works,
+    artist_by_work
 )
 
 
@@ -16,13 +17,31 @@ def main():
         elif choice == "1":
             list_artists()
         elif choice == "2":
-            pass
+            #find_artist_menu()
+            artist_loop()
         elif choice == "3":
-            list_movement()
+            pass #list_movement()
         elif choice == "4":
             pass #list_nationality()
         else:
             print("Invalid choice")
+
+def artist_loop():
+    find_artist_menu()
+    choice = input("> ")
+    if choice == "0":
+        exit_program()
+    elif choice == "1":
+        artist_by_work()
+    elif choice == "2":
+        pass
+    elif choice == "3":
+        pass 
+    elif choice == "4":
+        # go back to previous menu
+        main()
+    else:
+        print("Invalid choice")
 
 
 def menu():
