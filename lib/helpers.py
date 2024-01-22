@@ -50,28 +50,38 @@ def list_movement():
     input = input("Enter an artistic movement: ")
     
     artists = Artist.get_all()
-    for artist in artists:
-        if artist.movement == input :
-            print(artist)
+    [print(artist) for artist in artists if artist.movement == input]
 
 def update_artist(artist):
-    pass
+    try:
+        artist.name = input("Enter the artist's updated name: ")
+        artist.nationality = input("Enter the artist's updated nationality: ")
+        artist.movement = input("Enter the artist's updated artistic movement: ")
+
+        artist.update()
+        print(f"Success! Updated artist information: {artist.name} | {artist.nationality} | {artist.movement}")
+
+    except Exception as exc:
+        print("Error updating artist: ", exc)
 
 def artist_options():
     #print("The current artist is: ", Artist.current.name)
     print("0. Exit program")
     print("1. Update artist information")
     print("2. Remove artist from database")
-    print("3. Return to main menu")
+    print("3. Add a new work of art made by this artist")
+    print("4. Return to main menu")
 
     choice = input("> ")
     if choice == "0":
         exit_program()
     elif choice == "1":
-        pass
+        update_artist(Artist.current)
     elif choice == "2":
         pass
     elif choice == "3":
+        pass
+    elif choice == "4":
         pass
 
 def exit_program():
