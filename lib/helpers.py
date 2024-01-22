@@ -74,6 +74,16 @@ def add_artist(name):
         movement = input("Enter the artist's updated artistic movement: ")
 
         Artist.create(name, nationality, movement)
+        print(f"Success! The artist {name} has been added to the database.")
+        print(f"Would you like to add any of {name}'s works of art to the database?")
+        print("1. Yes")
+        print("2. No")
+
+        choice = input("> ")
+        if choice == "1":
+            add_work()
+        else:
+            pass
     except Exception as exc:
         print("Error adding new artist: ", exc)
 
@@ -111,7 +121,39 @@ def find_work():
         artist = Artist.find_by_id(work.artist_id)
         print(f"{title} is a/an {work.medium} piece and was created in {work.year} by {artist.name}.")
     except Exception:
-        print(f"Work {title} not in database.")
+        print(f"Work {title} not in database. Would you like to add it? ")
+        print("1. Yes")
+        print("2. No")
+
+        choice = input("> ")
+        if choice == "1":
+            add_work(title)
+        else:
+            pass
+
+def add_work(title=None):
+    if not title:
+        title = input("Enter the title of the work: ")
+    year = int( input("Enter the year the work was created: ") )
+    medium = input("Enter the art medium of the work: ")
+    artist_input = input("Enter the name of the artist of the work: ")
+    try:
+        artist = Artist.find_by_name(artist_input)
+        Work.create(title, year, medium, artist.id)
+        print(f"Success! The work {title} has been added to the database")
+    except Exception as exc:
+        #print("Error: ", exc)
+        print("The artist must already be in the database before entering the work.")
+        print(f"Would you like to add the artist {artist_input}?")
+
+        print("1. Yes")
+        print("2. No")
+
+        choice = input("> ")
+        if choice == "1":
+            add_artist(artist_input)
+        else:
+            pass
 
 def exit_program():
     print("Goodbye!")
