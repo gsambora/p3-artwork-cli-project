@@ -158,6 +158,11 @@ def works_by_artist():
         print("Error: ", exc)
         artist_not_found(name)
 
+def works_by_medium():
+    medium = input("Enter an artistic medium: ")
+    works = Work.get_all()
+    [print(f"{work.title} is a/an {work.medium} piece and was created in {work.year} by {Artist.find_by_id(work.artist_id).name}.") for work in works if work.medium == medium]
+
 def add_work(title=None, artist_input=None):
     if not title:
         title = input("Enter the title of the work: ")

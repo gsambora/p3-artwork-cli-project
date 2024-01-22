@@ -9,7 +9,8 @@ from helpers import (
     list_movement,
     list_nationality,
     find_work,
-    works_by_artist
+    works_by_artist,
+    works_by_medium
 )
 
 
@@ -33,6 +34,8 @@ def main():
             find_work()
         elif choice == "7":
             works_by_artist()
+        elif choice == "8":
+            works_by_medium()
         else:
             print("Invalid choice")
 
@@ -62,7 +65,7 @@ def menu():
     print("5.  List all works of art")
     print("6.  Find a work of art") #Find work menu
     print("7. List works by artist")
-    # print("8. List works by medium")
+    print("8. List works by medium")
     print("10. Add, update, or remove database information") #Database menu
 
 
