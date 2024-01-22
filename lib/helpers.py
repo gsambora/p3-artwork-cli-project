@@ -139,6 +139,25 @@ def find_work():
     except Exception:
         work_not_found(title)
 
+def works_by_artist():
+    name = input("Enter an artist's name: ")
+    try: 
+        artist = Artist.find_by_name(name)
+        works = artist.works()
+        [print(f"The work {work.title} was created by: {artist.name} | {artist.nationality} | {artist.movement}") for work in works]
+        print(f"Would you like to add a new work by {name}?")
+        print("1. Yes")
+        print("2. No")
+
+        choice = input("> ")
+        if choice == "1":
+            add_work()
+        else:
+            pass
+    except Exception as exc:
+        print("Error: ", exc)
+        artist_not_found(name)
+
 def add_work(title=None, artist_input=None):
     if not title:
         title = input("Enter the title of the work: ")
