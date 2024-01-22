@@ -5,7 +5,10 @@ from helpers import (
     list_artists,
     list_all_works,
     artist_by_work,
-    artist_by_name
+    artist_by_name,
+    list_movement,
+    list_nationality,
+    find_work
 )
 
 
@@ -20,9 +23,13 @@ def main():
         elif choice == "2":
             artist_loop()
         elif choice == "3":
-            pass #list_movement()
+            list_movement()
         elif choice == "4":
-            pass #list_nationality()
+            list_nationality()
+        elif choice == "5":
+            list_all_works()
+        elif choice == "6":
+            find_work()
         else:
             print("Invalid choice")
 
@@ -47,8 +54,8 @@ def menu():
     print("0.  Exit the program")
     print("1.  List all artists")
     print("2.  Find an artist") #Find artist menu
-    # print("3.  List artists by movement")
-    # print("4.  List artists by nationality")
+    print("3.  List artists by movement")
+    print("4.  List artists by nationality")
     print("5.  List all works of art")
     print("6.  Find a work of art") #Find work menu
     # print("7. List works by artist")
@@ -62,10 +69,6 @@ def find_artist_menu():
     print("1. Find artist by name")
     print("2. Find artist by work")
     print("3. Return to main menu")
-
-def find_work_menu():
-    print("1. Find work by title")
-    print("2. Find work by ID")
 
 def database_menu():
     print("1. Add an artist to the database")

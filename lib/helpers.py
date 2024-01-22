@@ -27,17 +27,18 @@ def artist_by_work():
         artist_options()
     except Exception as exc:
         print(f"Work {title} not in database.")
-    
-def list_all_works():
-    works = Work.get_all()
-    for work in works:
-        print(work)
 
 def list_movement():
-    input = input("Enter an artistic movement: ")
+    movement = input("Enter an artistic movement: ")
     
     artists = Artist.get_all()
-    [print(artist) for artist in artists if artist.movement == input]
+    [print(artist) for artist in artists if artist.movement == movement]
+
+def list_nationality():
+    nationality = input("Enter a nationality: ")
+
+    artists = Artist.get_all()
+    [print(artist) for artist in artists if artist.nationality == nationality]
 
 def update_artist(artist):
     try:
@@ -79,6 +80,21 @@ def artist_options():
         pass
     elif choice == "4":
         pass
+
+#ARTWORK HELPERS
+def list_all_works():
+    works = Work.get_all()
+    for work in works:
+        print(work)
+
+def find_work():
+    title = input("Enter the title of a work of art: ")
+    try:
+        work = Work.find_by_title(title)
+        artist = Artist.find_by_id(work.artist_id)
+        print(f"{title} is a/an {work.medium} piece and was created in {work.year} by {artist.name}.")
+    except Exception as exc:
+        print(f"Work {title} not in database.")
 
 def exit_program():
     print("Goodbye!")
