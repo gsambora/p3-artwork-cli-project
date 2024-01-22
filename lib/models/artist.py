@@ -3,6 +3,7 @@ from models.__init__ import CURSOR, CONN
 class Artist:
     #Dictionary of data from all artist class instances
     all = {}
+    current = None
 
     def __init__(self, name, nationality, movement, id = None):
         #Each artist instance should have a name, nationality, and movement

@@ -5,14 +5,15 @@ from models.work import Work
 def list_artists():
     artists = Artist.get_all()
     for artist in artists:
-        print("Artist: {artist.name} | {artist.nationality} | {artist.movement}")
+        print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
 
 def artist_by_name():
     name = input("Enter an artist's name: ")
     artist = Artist.find_by_name(name)
 
-    if artist :
-        print("Artist: {artist.name} | {artist.nationality} | {artist.movement}")
+    if artist:
+        print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
+        Artist.current = artist
         artist_options()
     else:
         print(f"Artist {name} not in database.")
@@ -22,8 +23,9 @@ def artist_by_id():
     artist = Artist.find_by_id(id)
 
     if artist:
-        print("Artist: {artist.name} | {artist.nationality} | {artist.movement}")
-        artist_options
+        print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
+        Artist.current = artist
+        artist_options()
     else:
         print(f"Artist {id} not in database.")
     
@@ -34,6 +36,7 @@ def artist_by_work():
     if work:
         artist = Artist.find_by_id(work.artist_id)
         print(f"The work {title} was created by: {artist.name} | {artist.nationality} | {artist.movement}")
+        Artist.current = artist
         artist_options()
     else:
         print(f"The work {title} is not in database.")
@@ -51,7 +54,11 @@ def list_movement():
         if artist.movement == input :
             print(artist)
 
+def update_artist(artist):
+    pass
+
 def artist_options():
+    #print("The current artist is: ", Artist.current.name)
     print("0. Exit program")
     print("1. Update artist information")
     print("2. Remove artist from database")
