@@ -4,7 +4,9 @@ from helpers import (
     exit_program,
     list_artists,
     list_all_works,
-    artist_by_work
+    artist_by_work,
+    artist_by_id,
+    artist_by_name
 )
 
 
@@ -17,7 +19,6 @@ def main():
         elif choice == "1":
             list_artists()
         elif choice == "2":
-            #find_artist_menu()
             artist_loop()
         elif choice == "3":
             pass #list_movement()
@@ -32,11 +33,11 @@ def artist_loop():
     if choice == "0":
         exit_program()
     elif choice == "1":
-        artist_by_work()
+        artist_by_name()
     elif choice == "2":
-        pass
+        artist_by_id()
     elif choice == "3":
-        pass 
+        artist_by_work()
     elif choice == "4":
         # go back to previous menu
         main()
@@ -49,20 +50,22 @@ def menu():
     print("0.  Exit the program")
     print("1.  List all artists")
     print("2.  Find an artist") #Find artist menu
-    print("3.  List artists by movement")
-    print("4.  List artists by nationality")
+    # print("3.  List artists by movement")
+    # print("4.  List artists by nationality")
     print("5.  List all works of art")
     print("6.  Find a work of art") #Find work menu
-    print("7. List works by artist")
-    print("8. List works by medium")
-    print("9. List works in chronological order")
+    # print("7. List works by artist")
+    # print("8. List works by medium")
+    # print("9. List works in chronological order")
     print("10. Add, update, or remove database information") #Database menu
 
 
 def find_artist_menu():
+    print("0. Exit the program")
     print("1. Find artist by name")
     print("2. Find artist by ID")
     print("3. Find artist by work")
+    print("4. Return to main menu")
 
 def find_work_menu():
     print("1. Find work by title")
