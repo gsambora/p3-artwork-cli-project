@@ -51,7 +51,10 @@ def list_nationality():
     artists = Artist.get_all()
     [print(artist) for artist in artists if artist.nationality == nationality]
 
-def update_artist(artist):
+def update_artist(artist=None):
+    if not artist:
+        name = input("Enter the name of the artist you want to update: ")
+        artist = Artist.find_by_name(name)
     try:
         artist.name = input("Enter the artist's updated name: ")
         artist.nationality = input("Enter the artist's updated nationality: ")
@@ -63,7 +66,10 @@ def update_artist(artist):
     except Exception as exc:
         print("Error updating artist: ", exc)
 
-def delete_artist(artist):
+def delete_artist(artist=None):
+    if not artist:
+        name = input("Enter the name of the artist you want to remove: ")
+        artist = Artist.find_by_name(name)
     try:
         name = artist.name
         artist.delete()
