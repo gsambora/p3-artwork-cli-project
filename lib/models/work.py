@@ -10,7 +10,7 @@ class Work:
         self.medium = medium
         self.artist_id = artist_id
     
-    def __str__(self):
+    def __repr__(self):
         return f"Work: {self.title}, {self.year} | {self.medium} | Artist ID: {self.artist_id}"
 
     @property

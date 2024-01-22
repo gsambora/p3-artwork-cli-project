@@ -12,7 +12,7 @@ class Artist:
         self.nationality = nationality
         self.movement = movement
 
-    def __repl__(self):
+    def __repr__(self):
         return f"Artist: {self.name} | {self.nationality} | {self.movement}"
     
     #Setting up name, nationality, and movement as attributes
@@ -115,6 +115,9 @@ class Artist:
         """
         CURSOR.execute(sql, (self.id))
         CONN.commit()
+        
+        #Delete works associated with artist
+        [work.delete() for work in self.works]
 
         #Delete dictionary entry using the id
         del type(self).all[self.id]
