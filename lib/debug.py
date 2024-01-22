@@ -12,7 +12,7 @@ def reset_database():
     Work.create_table()
 
 def make_sample_data():
-    Artist.create("Van Gogh", "Dutch", "Post-Impressionism")
+    Artist.create("Vincent Van Gogh", "Dutch", "Post-Impressionism")
     Artist.create("Claude Monet", "French", "Impressionism")
     Artist.create("Katsushika Hokusai", "Japanese", "Ukiyo-e")
     Artist.create("Frida Kahlo", "Mexican", "Surrealism")

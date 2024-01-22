@@ -64,6 +64,11 @@ def update_artist(artist):
     except Exception as exc:
         print("Error updating artist: ", exc)
 
+def delete_artist(artist):
+    name = artist.name
+    artist.delete()
+    print(f"Success! Deleted {name} and their works of art from database")
+
 def artist_options():
     #print("The current artist is: ", Artist.current.name)
     print("0. Exit program")
@@ -78,7 +83,7 @@ def artist_options():
     elif choice == "1":
         update_artist(Artist.current)
     elif choice == "2":
-        pass
+        delete_artist(Artist.current)
     elif choice == "3":
         pass
     elif choice == "4":
