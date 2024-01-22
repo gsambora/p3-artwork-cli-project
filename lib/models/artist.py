@@ -108,17 +108,18 @@ class Artist:
         CONN.commit()
     
     def delete(self):
+        #Delete works associated with artist first
+        works = self.works()
+        [work.delete() for work in works]
+
         #Delete the current artist from the artists table and class dictionary
         sql = """
             DELETE FROM artists
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.id))
+        CURSOR.execute(sql, (self.id,))
         CONN.commit()
         
-        #Delete works associated with artist
-        [work.delete() for work in self.works]
-
         #Delete dictionary entry using the id
         del type(self).all[self.id]
 
