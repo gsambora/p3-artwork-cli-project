@@ -205,6 +205,18 @@ def update_work(work=None):
     except Exception as exc:
         print("Error updating work: ", exc)
 
+def delete_work(work=None):
+    if not work:
+        title = input("Enter the title of the work you want to delete: ")
+        work = Work.find_by_title(title)
+
+    try:
+        title = work.title
+        work.delete()
+        print(f"Success! Removed {title} from database")
+    except Exception as exc:
+        print("Error deleting work: ", exc)
+    
 def exit_program():
     print("Goodbye!")
     exit()

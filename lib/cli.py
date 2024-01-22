@@ -15,7 +15,8 @@ from helpers import (
     update_artist,
     delete_artist,
     add_work,
-    update_work
+    update_work,
+    delete_work
 )
 
 
@@ -77,7 +78,7 @@ def database_loop():
     elif choice == "5":
         update_work()
     elif choice == "6":
-        find_work()
+        delete_work()
 
 def menu():
     print("Please select an option:")
