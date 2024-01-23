@@ -3,9 +3,11 @@ from models.artist import Artist
 from models.work import Work
 
 def list_artists():
+    #List all artists in database and give user the option to add a new artist
     artists = Artist.get_all()
     for artist in artists:
         print(f"Artist: {artist.name} | {artist.nationality} | {artist.movement}")
+
     print("Would you like to add a new work of art?")
     print("1. Yes")
     print("2. No")
@@ -17,6 +19,8 @@ def list_artists():
         pass
 
 def artist_by_name():
+    #User can search for artist by name. 
+    #If artist is found, user is given the artist_options menu. If not found, user can add the artist.
     name = input("Enter an artist's name: ")
     try:
         artist = Artist.find_by_name(name)
@@ -27,6 +31,8 @@ def artist_by_name():
         artist_not_found(name)
 
 def artist_not_found(name=None):
+    #Function to be called when an artist is not found in the database. 
+    #Calls add_artist with the name originally provided by user.
     print(f"Artist {name} not in database. Would you like to add them?")
     print("1. Yes")
     print("2. No")
@@ -38,6 +44,8 @@ def artist_not_found(name=None):
         pass
 
 def artist_by_work():
+    #User can search for artist by work. 
+    #If the work is found, the user is given the artist_options menu. If not found, the user can add the work.
     title = input("Enter the title of a work of art: ")
     try:
         work = Work.find_by_title(title)
@@ -49,18 +57,28 @@ def artist_by_work():
         work_not_found(title)
 
 def list_movement():
+    #User inputs an artistic movement and receives a list of the artists in that movement.
+    #If there are no artists in the movement, user gets a message.
     movement = input("Enter an artistic movement: ")
-    
-    artists = Artist.get_all()
-    [print(artist) for artist in artists if artist.movement == movement]
+    try:
+        artists = Artist.get_all()
+        [print(artist) for artist in artists if artist.movement == movement]
+    except:
+        print("There are no artists in that movement currently in the database.")
 
 def list_nationality():
+    #User inputs a nationality and receives a list of artists with that nationality.
+    #If there are no corresponding artists, user gets an error message.
     nationality = input("Enter a nationality: ")
-
-    artists = Artist.get_all()
-    [print(artist) for artist in artists if artist.nationality == nationality]
+    try:
+        artists = Artist.get_all()
+        [print(artist) for artist in artists if artist.nationality == nationality]
+    except:
+        print("There are no artists in that movement currently in the database.")
 
 def update_artist(artist=None):
+    #Updates the artist information with user input. artist variable may be provided from the user finding an artist,
+    #If called outside of the user finding an artist, then the user will enter the name of the artist to update.
     if not artist:
         name = input("Enter the name of the artist you want to update: ")
         artist = Artist.find_by_name(name)
@@ -76,6 +94,7 @@ def update_artist(artist=None):
         print("Error updating artist: ", exc)
 
 def delete_artist(artist=None):
+    #Deletes an artist from the database. artist variable may be provided from the user finding an artist.
     if not artist:
         name = input("Enter the name of the artist you want to remove: ")
         artist = Artist.find_by_name(name)
@@ -87,6 +106,8 @@ def delete_artist(artist=None):
         print("Error deleting artist: ", exc)
 
 def add_artist(name=None):
+    #Adds an artist to the database with user input. name may be provided from previous user search for that name.
+    #Once the artist is added, the user gets an option to add works by that artist.
     if not name:
         name = input("Enter the artist's name: ")
     try:
@@ -101,7 +122,7 @@ def add_artist(name=None):
 
         choice = input("> ")
         if choice == "1":
-            add_work(name)
+            add_work(None, name)
         else:
             pass
     except Exception as exc:
@@ -109,7 +130,8 @@ def add_artist(name=None):
 
 
 def artist_options():
-    #print("The current artist is: ", Artist.current.name)
+    #Options to provide the user whenever they find an artist. 
+    #They can easily update/remove the artist or add a new work made by the found artist.
     print("0. Exit program")
     print("1. Update artist information")
     print("2. Remove artist from database")
@@ -130,6 +152,7 @@ def artist_options():
 
 #ARTWORK HELPERS
 def list_all_works():
+    #List all works currently in the database. User can then add a new work.
     works = Work.get_all()
     for work in works:
         artist = Artist.find_by_id(work.artist_id)
@@ -146,6 +169,7 @@ def list_all_works():
         pass
 
 def work_not_found(title=None):
+    #Display when a user searches for a work and it is not found. User gets option to add work by the provided name.
     print(f"Work {title} not in database. Would you like to add it? ")
     print("1. Yes")
     print("2. No")
@@ -157,6 +181,8 @@ def work_not_found(title=None):
         pass
 
 def find_work():
+    #User can search for a work by name. If found, user sees the work_options menu.
+    #If not found, user gets work_not_found menu with option to add the work.
     title = input("Enter the title of a work of art: ")
     try:
         work = Work.find_by_title(title)
@@ -168,6 +194,8 @@ def find_work():
         work_not_found(title)
 
 def works_by_artist():
+    #User can search for all works made by an artist, then gets an opportunity to add a new work by that artist.
+    #If the artist provided is not in the database, the user gets an opportunity to add the artist.
     name = input("Enter an artist's name: ")
     try: 
         artist = Artist.find_by_name(name)
@@ -183,15 +211,22 @@ def works_by_artist():
         else:
             pass
     except Exception as exc:
-        print("Error: ", exc)
+        #print("Error: ", exc)
         artist_not_found(name)
 
 def works_by_medium():
+    #User can search for all works made with the provided medium.
+    #If there are no corresponding works, user receives an error message.
     medium = input("Enter an artistic medium: ")
-    works = Work.get_all()
-    [print(f'"{work.title}" is a/an {work.medium} piece and was created in {work.year} by {Artist.find_by_id(work.artist_id).name}.') for work in works if work.medium == medium]
+    try:
+        works = Work.get_all()
+        [print(f'"{work.title}" is a/an {work.medium} piece and was created in {work.year} by {Artist.find_by_id(work.artist_id).name}.') for work in works if work.medium == medium]
+    except:
+        print(f"There are no {medium} works currently in the database.")
 
 def add_work(title=None, artist_input=None):
+    #User can add a work. Title and artist's name may be provided from previous user input.
+    #If the artist of the work is not in the database, the user can add that artist.
     if not title:
         title = input("Enter the title of the work: ")
     year = int( input("Enter the year the work was created: ") )
@@ -208,6 +243,7 @@ def add_work(title=None, artist_input=None):
         artist_not_found(artist_input)
 
 def update_work(work=None):
+    #User can update a work's title, year, medium, and artist. The work may be provided from a previous user step. 
     if not work:
         title = input("Enter the title of the work you want to update: ")
         work = Work.find_by_title(title)
@@ -227,6 +263,7 @@ def update_work(work=None):
         print("Error updating work: ", exc)
 
 def delete_work(work=None):
+    #User can delete a work by providing a title. Title may already be provided from previous step.
     if not work:
         title = input("Enter the title of the work you want to delete: ")
         work = Work.find_by_title(title)
@@ -239,6 +276,7 @@ def delete_work(work=None):
         print("Error deleting work: ", exc)
 
 def work_options():
+    #Options to display whenever user finds a work. User can update or remove the found work.
     print("0. Exit program")
     print("1. Update work information")
     print("2. Remove work from database")
