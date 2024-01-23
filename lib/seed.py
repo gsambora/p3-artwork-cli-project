@@ -1,17 +1,13 @@
-#!/usr/bin/env python3
-# lib/debug.py
-
 from models.__init__ import CONN, CURSOR
 from models.artist import Artist
 from models.work import Work
 
-def reset_database():
+def make_sample_data():
     Artist.drop_table()
     Work.drop_table()
     Artist.create_table()
     Work.create_table()
-
-def make_sample_data():
+    
     Artist.create("Vincent Van Gogh", "Dutch", "Post-Impressionism")
     Artist.create("Claude Monet", "French", "Impressionism")
     Artist.create("Katsushika Hokusai", "Japanese", "Ukiyo-e")
@@ -23,6 +19,5 @@ def make_sample_data():
     Work.create("The Two Fridas", 1939, "Oil on canvas", 4)
     Work.create("The Great Wave off Kanagawa", 1831, "Woodblock print", 3)
 
-
-#reset_database()
-breakpoint()
+make_sample_data()
+print("Sample data loaded in artwork.db")

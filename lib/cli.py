@@ -48,6 +48,7 @@ def main():
             print("Invalid choice")
 
 def artist_loop():
+    #displays when user chooses to find an artist
     find_artist_menu()
     choice = input("> ")
     if choice == "0":
@@ -63,6 +64,7 @@ def artist_loop():
         print("Invalid choice")
 
 def database_loop():
+    #displays when user wants to edit database entries
     database_menu()
     choice = input("> ")
     if choice == "0":
